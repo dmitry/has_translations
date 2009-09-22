@@ -59,7 +59,20 @@ No restrictions at all. Please, give me an example... sure:
       validates_length_of :title, :maximum => 100
     end
 
+PS
+==
 
+Plugin also have small addon to I18n gem. You can define your own available_locales through:
+
+    I18n.available_locales = :en, :ru, :de
+
+And get those values through:
+
+    I18n.available_locales
+
+This is done because of some plugins have own (for example ActiveScaffold has "ru, es, hu" in-box) locales. To override this, you can place I18n.available_locales= to your environment.rb file, eg.:
+
+    I18n.available_locales = :en, :ru, :ee
 
 TODO
 ====
