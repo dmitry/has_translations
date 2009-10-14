@@ -59,6 +59,10 @@ No restrictions at all. Please, give me an example... sure:
       validates_length_of :title, :maximum => 100
     end
 
+Options:
+
+:fallback => true [default: false] - use fallback using this steps: 1) default scope; 2) first from translations; 3) empty string
+
 PS
 ==
 
@@ -79,7 +83,8 @@ TODO
 
 * model and migration generators
 * optimization using :include and :conditions
-* write more examples
+* caching
+* write more examples: fallback feature
 * write blog post about comparison and benefits of this plugin between another translation model plugins
 
 
