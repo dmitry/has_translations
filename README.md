@@ -101,7 +101,8 @@ I know three of them:
 Used in
 =======
 
-* [sem.ee](http://sem.ee)
+* [domnatenerife.ru](http:/www.domnatenerife.ru/) (since 1st of January, 2010)
+* [sem.ee](http://sem.ee/)
 
 
 Copyright (c) 2009 [Dmitry Polushkin], released under the MIT license
