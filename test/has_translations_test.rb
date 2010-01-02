@@ -64,7 +64,7 @@ class HasTranslationsTest < Test::Unit::TestCase
     team = Team.create!
     assert_equal '', team.text
     team_translation = TeamTranslation.create!(:team => team, :locale => 'en', :text => 'text')
-    assert_equal team_translation.text, team.text
+    assert_equal team_translation.text, team.reload.text
   end
 
   def test_i18n_available_locales
