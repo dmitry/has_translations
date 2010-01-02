@@ -14,13 +14,14 @@ class HasTranslationsTest < Test::Unit::TestCase
   end
 
   class Team < ActiveRecord::Base
-    translations :text, :fallback => true
+    translations :text, :fallback => true, :auto_include => true
   end
 
   def setup
     [Article, ArticleTranslation, Team, TeamTranslation].each do |k|
       k.delete_all
     end
+    I18n.available_locales = :ru, :en
     I18n.locale = :ru
   end
 
@@ -65,6 +66,14 @@ class HasTranslationsTest < Test::Unit::TestCase
     assert_equal '', team.text
     team_translation = TeamTranslation.create!(:team => team, :locale => 'en', :text => 'text')
     assert_equal team_translation.text, team.reload.text
+  end
+
+  def test_all_translations_sorted_build_or_translation_getted
+    team = Team.create!
+    team_translation = TeamTranslation.create!(:team => team, :locale => 'en', :text => 'text')
+    assert_equal team_translation, team.all_translations.second
+    team_translation_new = team.translations.build(:locale => :ru)
+    assert_equal team_translation_new.locale, team.all_translations.first.locale
   end
 
   def test_i18n_available_locales
