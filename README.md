@@ -93,9 +93,10 @@ Alternatives
 
 I know three of them:
 
-* [globalite2](http://github.com/joshmh/globalize2)
-* [model_translations](http://github.com/janne/model_translations)
-* [translatable_columns](http://github.com/iain/translatable_columns)
+* [puret](http://github.com/jo/puret) - special for Rails 3 and almost the same as this project.
+* [globalite2](http://github.com/joshmh/globalize2) - a lot of magic.
+* [model_translations](http://github.com/janne/model_translations) - almost the same as this project, but more with more code in lib.
+* [translatable_columns](http://github.com/iain/translatable_columns) - different approach: every column have own postfix "_#{locale}" in the same table (sometimes it could be fine).
 
 
 Used in
