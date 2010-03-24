@@ -1,17 +1,19 @@
-HasTranslations
-===============
+HasTranslations v0.2
+====================
 
 This simple plugin creates translations for your model.
 
 
+Uses delegation pattern: http://en.wikipedia.org/wiki/Delegation_pattern
+
 Example
 =======
 
-For example you have Article model. You want to have title and text to be translated.
+For example you have Article model and you want to have title and text to be translated.
 
 Create model named ArticleTranslation (Rule: [CamelCaseModelName]Translation)
 
-Migration should have locale as a string with two letters and belongs_to associative id, like:
+Migration should have `locale` as a string with two letters and `belongs_to associative id`, like:
 
     class CreateArticleTranslations < ActiveRecord::Migration
       def self.up
@@ -30,7 +32,7 @@ Migration should have locale as a string with two letters and belongs_to associa
       end
     end
 
-Add to article model "translations :value, value2"
+Add to article model `translations :value1, :value2`:
 
     class Article < ActiveRecord::Base
       translations :title, :text
@@ -48,12 +50,10 @@ And that's it. Now you can add your translations using:
     I18n.locale = :ru
     article.title # заголовок
 
-You can use text filtering plugins, like acts_as_textiled and validations.
-No restrictions at all. Please, give me an example... sure:
-
+You can use text filtering plugins, like acts_as_sanitiled and validations, and anything else that is available to the ActiveRecord:
 
     class ArticleTranslation < ActiveRecord::Base
-      acts_as_textiled :title, :text
+      acts_as_sanitiled :title, :text
 
       validates_presence_of :title, :text
       validates_length_of :title, :maximum => 100
@@ -61,12 +61,12 @@ No restrictions at all. Please, give me an example... sure:
 
 Options:
 
-:fallback => true [default: false] - use fallback using this steps: 1) default scope; 2) first from translations; 3) empty string
+:fallback => true [default: false] - fallback 1) default scope; 2) first from translations; 3) empty string
 
 PS
 ==
 
-Plugin also have small addon to I18n gem. You can define your own available_locales through:
+Plugin also have small monkeypatch for the I18n gem. Using it you can define your own available_locales through:
 
     I18n.available_locales = :en, :ru, :de
 
@@ -74,15 +74,16 @@ And get those values through:
 
     I18n.available_locales
 
-This is done because of some plugins have own (for example ActiveScaffold has "ru, es, hu" in-box) locales. To override this, you can place I18n.available_locales= to your environment.rb file, eg.:
+This is done because of some plugins have own (for example ActiveScaffold has "ru, es, hu" in-box) locales, and this can be a problem for the all_translation method to build an array. To override this, you can place I18n.available_locales= to your environment.rb file, e.g.:
 
     I18n.available_locales = :en, :ru, :ee
 
 TODO
 ====
 
+* active record 3 (rails 3) support
+* add installation description to readme
 * model and migration generators
-* optimization using :include and :conditions
 * caching
 * write more examples: fallback feature
 * write blog post about comparison and benefits of this plugin between another translation model plugins
@@ -101,8 +102,8 @@ I know three of them:
 Used in
 =======
 
-* [domnatenerife.ru](http://www.domnatenerife.ru/) (since 1st of January, 2010)
-* [sem.ee](http://sem.ee/)
+* [domnatenerife.ru](http://www.domnatenerife.ru/) ([etenproperty.com](http://www.etenproperty.com) / [etenproperty.de](http://www.etenproperty.de) / [eten.es](http://www.eten.es))
+* [sem.ee](http://sem.ee/) ([sem.ee/ru](http://sem.ee/ru/) / [sem.ee/en](http://sem.ee/en/))
 
 
-Copyright (c) 2009 [Dmitry Polushkin], released under the MIT license
+Copyright (c) 2009-2010 [Dmitry Polushkin], released under the MIT license
