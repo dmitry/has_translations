@@ -101,7 +101,7 @@ class ActiveRecord::Base
       end
     end
 
-    # TODO add tests and add to doc
+    # TODO add to doc
     if options[:writer]
       attrs.each do |name|
         send :define_method, "#{name}=" do |value|
@@ -117,7 +117,6 @@ class ActiveRecord::Base
     translation_class.validates_presence_of :locale, belongs_to
     translation_class.validates_uniqueness_of :locale, :scope => :"#{belongs_to}_id"
 
-    # TODO document and test
     named_scope :translated, lambda { |locale| {:conditions => ["#{translation_class.table_name}.locale = ?", locale.to_s], :joins => :translations} } # TODO  || havent included "|| I18n.locale" because of warning
   end
 end

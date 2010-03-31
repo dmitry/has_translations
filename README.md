@@ -80,7 +80,7 @@ So an example which I used in the production (using `formtastic` gem):
       <%= f.error_messages %>
 
       <% f.inputs :name => "Basic" do %>
-        <% object.all_translations.each do |translation| %>
+        <% object.all_translations.values.each do |translation| %>
           <% f.semantic_fields_for :translations, translation do |ft| %>
             <%= ft.input :title, :label => "Title #{ft.object.locale.to_s.upcase}" %>
             <%= ft.input :text, :label => "Text #{ft.object.locale.to_s.upcase}" %>
