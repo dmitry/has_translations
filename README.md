@@ -1,10 +1,11 @@
-HasTranslations v0.2
+HasTranslations v0.3.pre
 ====================
 
 This simple plugin creates translations for your model.
-
-
 Uses delegation pattern: http://en.wikipedia.org/wiki/Delegation_pattern
+
+*NOTE:* this is prerelease. In several weeks I will cleanup everything and create a gem.
+Usage of this version on your own risk. Use 0.2 tag instead, if you want stable one.
 
 Example
 =======
@@ -61,7 +62,39 @@ You can use text filtering plugins, like acts_as_sanitiled and validations, and 
 
 Options:
 
-:fallback => true [default: false] - fallback 1) default scope; 2) first from translations; 3) empty string
+* :fallback => true [default: false] - fallback 1) default scope; 2) first from translations; 3) empty string
+* :reader => false [default: true] - add reader to the model object
+* :writer => true [default: false] - add writer to the model object
+* :reader_nil => nil [default: ''] - if no model found by default returns empty string, you can set it for example to `nil` (no `lambda` supported)
+
+It's better to use translations with `accepts_nested_attributes_for`:
+
+    accepts_nested_attributes_for :translations
+
+To create a form for this you can use `all_translations` method. It's have all
+the locales that you have added using the `I18n.available_locales=` method.
+If translation for one of the locale isn't exists, it will build it with :locale.
+So an example which I used in the production (using `formtastic` gem):
+
+    <% semantic_form_for [:admin, @article] do |f| %>
+      <%= f.error_messages %>
+
+      <% f.inputs :name => "Basic" do %>
+        <% object.all_translations.each do |translation| %>
+          <% f.semantic_fields_for :translations, translation do |ft| %>
+            <%= ft.input :title, :label => "Title #{ft.object.locale.to_s.upcase}" %>
+            <%= ft.input :text, :label => "Text #{ft.object.locale.to_s.upcase}" %>
+            <%= ft.input :locale, :as => :hidden %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+Sometimes you have validations in the translation model, and if you want to skip
+the translations that you don't want to add to the database, you can use
+`:reject_if` option, which is available for the `accepts_nested_attributes_for`:
+
+    accepts_nested_attributes_for :translations, :reject_if => lambda { |attrs| attrs['title'].blank? && attrs['text'].blank? }
 
 PS
 ==

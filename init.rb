@@ -1,1 +1,2 @@
-require File.dirname(__FILE__) + '/lib/has_translations'
+require 'has_translations'
+require 'i18n_ext'

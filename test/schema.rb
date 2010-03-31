@@ -19,4 +19,18 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string :locale, :null => false, :limit => 2
     t.text :text
   end
-end 
+end
+
+class ArticleTranslation < ActiveRecord::Base
+end
+
+class Article < ActiveRecord::Base
+  translations :description, :text, :writer => true
+end
+
+class TeamTranslation < ActiveRecord::Base
+end
+
+class Team < ActiveRecord::Base
+  translations :text, :fallback => true, :nil => nil
+end

@@ -1,39 +1,27 @@
-ENV['RAILS_ENV'] = 'test'
-ENV['RAILS_ROOT'] ||= File.dirname(__FILE__) + '/../../../..'
-
+require 'rubygems'
 require 'test/unit'
 
-require 'rubygems'
-gem 'activerecord', '>= 2.1'
-require 'active_record'
-gem 'activesupport', '>= 2.1'
+gem 'activesupport', '~> 2.3'
+gem 'activerecord', '~> 2.3'
+
 require 'active_support'
+require 'active_record'
+require 'logger'
 
-#require File.expand_path(File.join(ENV['RAILS_ROOT'], 'config/environment.rb'))
+require 'has_translations'
+require 'i18n_ext'
 
-def load_schema
-  config = YAML::load(IO.read(File.dirname(__FILE__) + '/database.yml'))
-  ActiveRecord::Base.logger = Logger.new(File.dirname(__FILE__) + "/debug.log")
-  
-  db_adapter = ENV['DB'] # no db passed, try one of these fine config-free DBs before bombing.
-  
-  db_adapter ||= begin
-    require 'rubygems'
-    require 'sqlite'
-    'sqlite'
-  rescue MissingSourceFile
-    begin
-      require 'sqlite3'
-      'sqlite3'
-    rescue MissingSourceFile
-    end
+#ActiveRecord::Base.logger = Logger.new(STDOUT)
+ActiveRecord::Base.logger = nil
+ActiveRecord::Base.establish_connection(:adapter => "sqlite3", :database => ":memory:")
+
+def setup_db
+  ActiveRecord::Migration.verbose = false
+  load "schema.rb"
+end
+
+def teardown_db
+  ActiveRecord::Base.connection.tables.each do |table|
+    ActiveRecord::Base.connection.drop_table(table)
   end
-
-  if db_adapter.nil?
-    raise "No DB Adapter selected. Pass the DB= option to pick one, or install Sqlite or Sqlite3."
-  end
-
-  ActiveRecord::Base.establish_connection(config[db_adapter])
-  load(File.dirname(__FILE__) + "/schema.rb")
-  require File.dirname(__FILE__) + '/../init.rb'
 end
