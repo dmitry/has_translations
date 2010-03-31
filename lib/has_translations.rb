@@ -49,7 +49,6 @@ class ActiveRecord::Base
   # * <tt>:nil</tt> - when reader cant find string, it returns by default an
   #   empty string. If you want to change this setting for example to nil,
   #   add :nil => nil
-  #
   def self.translations(*attrs)
     options = {
       :fallback => false,
@@ -119,6 +118,6 @@ class ActiveRecord::Base
     translation_class.validates_uniqueness_of :locale, :scope => :"#{belongs_to}_id"
 
     # TODO document and test
-    named_scope :translated, lambda { |locale| {:conditions => ["#{translation_class.table_name}.locale = ?", locale || I18n.locale], :join => :translations} }
+    named_scope :translated, lambda { |locale| {:conditions => ["#{translation_class.table_name}.locale = ?", locale.to_s], :joins => :translations} } # TODO  || havent included "|| I18n.locale" because of warning
   end
 end

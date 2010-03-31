@@ -92,6 +92,17 @@ class HasTranslationsTest < Test::Unit::TestCase
     assert team.has_translation?(:en)
   end
 
+  def test_named_scope_translated
+    assert_equal 0, Team.translated(:en).count
+    assert_equal 0, Team.translated(:ru).count
+    team = Team.create!
+    team.translations.create!(:locale => 'en', :text => 'text')
+    assert_equal 0, Team.translated(:ru).count
+    assert_equal 1, Team.translated(:en).count
+    team.translations.create!(:locale => 'ru', :text => 'текст')
+    assert_equal 1, Team.translated(:ru).count
+  end
+
   def test_i18n_available_locales
     assert_not_equal [:xx], I18n.available_locales
     I18n.available_locales = :xx

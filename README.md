@@ -62,10 +62,10 @@ You can use text filtering plugins, like acts_as_sanitiled and validations, and 
 
 Options:
 
-* :fallback => true [default: false] - fallback 1) default scope; 2) first from translations; 3) empty string
+* :fallback => true [default: false] - fallback 1) default locale; 2) first from translations;
 * :reader => false [default: true] - add reader to the model object
 * :writer => true [default: false] - add writer to the model object
-* :reader_nil => nil [default: ''] - if no model found by default returns empty string, you can set it for example to `nil` (no `lambda` supported)
+* :nil => nil [default: ''] - if no model found by default returns empty string, you can set it for example to `nil` (no `lambda` supported)
 
 It's better to use translations with `accepts_nested_attributes_for`:
 
@@ -95,6 +95,11 @@ the translations that you don't want to add to the database, you can use
 `:reject_if` option, which is available for the `accepts_nested_attributes_for`:
 
     accepts_nested_attributes_for :translations, :reject_if => lambda { |attrs| attrs['title'].blank? && attrs['text'].blank? }
+
+Added named_scope `translated(locale)`. With that named_scope you can find only
+those models that is translated only to specific locale. For example if you will
+have 2 models, one is translated to english and the second one isn't, then it
+`Article.translated(:en)` will find only first one.
 
 PS
 ==
