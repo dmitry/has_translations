@@ -4,8 +4,14 @@ HasTranslations v0.3.pre
 This simple plugin creates translations for your model.
 Uses delegation pattern: http://en.wikipedia.org/wiki/Delegation_pattern
 
-*NOTE:* this is prerelease. In several weeks I will cleanup everything and create a gem.
-Usage of this version on your own risk. Use 0.2 tag instead, if you want stable one.
+Installation
+============
+
+    gem install has_translations
+
+or as a plugin
+
+    script/plugin install git://github.com/dmitry/has_translations.git
 
 Example
 =======
@@ -96,7 +102,7 @@ the translations that you don't want to add to the database, you can use
 
     accepts_nested_attributes_for :translations, :reject_if => lambda { |attrs| attrs['title'].blank? && attrs['text'].blank? }
 
-Added named_scope `translated(locale)`. With that named_scope you can find only
+named_scope `translated(locale)` - with that named_scope you can find only
 those models that is translated only to specific locale. For example if you will
 have 2 models, one is translated to english and the second one isn't, then it
 `Article.translated(:en)` will find only first one.
@@ -104,17 +110,9 @@ have 2 models, one is translated to english and the second one isn't, then it
 PS
 ==
 
-Plugin also have small monkeypatch for the I18n gem. Using it you can define your own available_locales through:
+I suggest you to use latest i18n gem, include it in your rails 2 environment:
 
-    I18n.available_locales = :en, :ru, :de
-
-And get those values through:
-
-    I18n.available_locales
-
-This is done because of some plugins have own (for example ActiveScaffold has "ru, es, hu" in-box) locales, and this can be a problem for the all_translation method to build an array. To override this, you can place I18n.available_locales= to your environment.rb file, e.g.:
-
-    I18n.available_locales = :en, :ru, :ee
+    config.gem 'i18n', :version => '0.4.1' # change version to the latest
 
 TODO
 ====
@@ -142,8 +140,8 @@ Used in
 =======
 
 * [noch.es](http://noch.es/)
-* [domnatenerife.ru](http://www.domnatenerife.ru/) ([etenproperty.com](http://www.etenproperty.com) / [etenproperty.de](http://www.etenproperty.de) / [eten.es](http://www.eten.es))
-* [sem.ee](http://sem.ee/) ([sem.ee/ru](http://sem.ee/ru/) / [sem.ee/en](http://sem.ee/en/))
+* [eten.es](http://www.eten.es))
+* [sem.ee](http://sem.ee/)
 
 
 Copyright (c) 2009-2010 [Dmitry Polushkin], released under the MIT license

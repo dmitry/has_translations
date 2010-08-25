@@ -1,15 +1,13 @@
 require 'rubygems'
 require 'test/unit'
 
-gem 'activesupport', '~> 2.3'
 gem 'activerecord', '~> 2.3'
+gem 'i18n', '~> 0.4'
 
-require 'active_support'
 require 'active_record'
 require 'logger'
 
 require 'has_translations'
-require 'i18n_ext'
 
 #ActiveRecord::Base.logger = Logger.new(STDOUT)
 ActiveRecord::Base.logger = nil

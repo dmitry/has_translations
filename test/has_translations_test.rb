@@ -7,7 +7,7 @@ class HasTranslationsTest < Test::Unit::TestCase
     [Article, ArticleTranslation, Team, TeamTranslation].each do |k|
       k.delete_all
     end
-    I18n.available_locales = :ru, :en
+    I18n.available_locales = :ru, :en, :es
     I18n.locale = :ru
   end
 
@@ -22,7 +22,7 @@ class HasTranslationsTest < Test::Unit::TestCase
     assert_equal :ru, I18n.locale
   end
 
-  def test_get_text_for_a_given_locale
+  def test_reader_text_for_a_given_locale
     article = Article.create!
     article_translation = ArticleTranslation.create!(:article => article, :locale => 'en', :description => 'desc', :text => 'text')
     assert_not_equal article.text, article_translation.text
@@ -30,13 +30,17 @@ class HasTranslationsTest < Test::Unit::TestCase
     assert_equal article.text, article_translation.text
   end
 
-  def test_set_text_for_a_given_locale
+  def test_writer_text_for_a_given_locale
     article = Article.create!
     article.text = 'text'
     assert_equal 0, article.translations.count
     article.save!
     assert_equal 1, article.translations.length
     assert_equal 1, article.translations.count
+    I18n.locale = :en
+    assert_equal '', article.text
+    article.update_attributes!(:text => 'text')
+    assert_equal 2, Article.first.translations.count
   end
 
   def test_translations_association_and_translations
@@ -56,17 +60,21 @@ class HasTranslationsTest < Test::Unit::TestCase
 
   def test_translation_validations
     article_translation = ArticleTranslation.create(:description => 'description', :text => 'text')
-    assert article_translation.errors[:article].present?
     assert article_translation.errors[:locale].present?
+    # TODO may be add :inverse_of to has_many and add presence validation for the belongs_to
   end
 
-  def test_fallback_options
+  def test_fallback_and_nil_options
     article = Article.create!
     assert_equal '', article.text
     team = Team.create!
     assert_equal nil, team.text
-    team_translation = TeamTranslation.create!(:team => team, :locale => 'en', :text => 'text')
-    assert_equal team_translation.text, team.reload.text
+    first_translation = TeamTranslation.create!(:team => team, :locale => 'es', :text => 'text')
+    assert_equal first_translation.text, team.reload.text
+    default_translation = TeamTranslation.create!(:team => team, :locale => 'en', :text => 'text')
+    assert_equal default_translation.text, team.reload.text
+    real_translation = TeamTranslation.create!(:team => team, :locale => 'ru', :text => 'текст')
+    assert_equal real_translation.text, team.reload.text
   end
 
   def test_all_translations_sorted_build_or_translation_getted
@@ -101,13 +109,5 @@ class HasTranslationsTest < Test::Unit::TestCase
     assert_equal 1, Team.translated(:en).count
     team.translations.create!(:locale => 'ru', :text => 'текст')
     assert_equal 1, Team.translated(:ru).count
-  end
-
-  def test_i18n_available_locales
-    assert_not_equal [:xx], I18n.available_locales
-    I18n.available_locales = :xx
-    assert_equal :xx, I18n.available_locales
-    I18n.available_locales = :xx, :xy
-    assert_equal [:xx, :xy], I18n.available_locales
   end
 end
