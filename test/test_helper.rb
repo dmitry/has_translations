@@ -1,13 +1,25 @@
 require 'rubygems'
 require 'test/unit'
 
-gem 'activerecord', '~> 2.3'
-gem 'i18n', '~> 0.4'
+case ENV['RAILS_VERSION']
+when '3.0' then
+  gem 'activerecord', '~> 3.0.0'
+  gem 'activesupport', '~> 3.0.0'
+else
+  gem 'activerecord', '~> 2.3.0'
+  gem 'activesupport', '~> 2.3.0'
+end
 
 require 'active_record'
 require 'logger'
 
 require 'has_translations'
+
+begin
+  I18n.available_locales = :ru, :en, :es
+rescue
+  p "[WARNING]: This test should have the I18n.available_locales= method, which were included in versions ~> 0.3.0"
+end
 
 #ActiveRecord::Base.logger = Logger.new(STDOUT)
 ActiveRecord::Base.logger = nil

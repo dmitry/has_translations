@@ -140,7 +140,12 @@ class ActiveRecord::Base
     translation_class.validates_presence_of :locale
     translation_class.validates_uniqueness_of :locale, :scope => :"#{belongs_to}_id"
 
-    named_scope :translated, lambda { |locale| {:conditions => ["#{translation_class.table_name}.locale = ?", locale.to_s], :joins => :translations} }
+    # Rails 3.0
+    if Object.const_defined?("ActiveModel")
+      scope :translated, lambda { |locale| {:conditions => ["#{translation_class.table_name}.locale = ?", locale.to_s], :joins => :translations} }
+    else
+      named_scope :translated, lambda { |locale| {:conditions => ["#{translation_class.table_name}.locale = ?", locale.to_s], :joins => :translations} }
+    end
 
     private
 

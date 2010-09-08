@@ -7,7 +7,6 @@ class HasTranslationsTest < Test::Unit::TestCase
     [Article, ArticleTranslation, Team, TeamTranslation].each do |k|
       k.delete_all
     end
-    I18n.available_locales = :ru, :en, :es
     I18n.locale = :ru
   end
 

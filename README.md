@@ -1,8 +1,10 @@
-HasTranslations v0.3.pre
-====================
+HasTranslations v0.3.1
+======================
 
 This simple plugin creates translations for your model.
 Uses delegation pattern: http://en.wikipedia.org/wiki/Delegation_pattern
+
+Tested with ActiveRecord versions: 2.3.5, 2.3.9, 3.0.0 (to test with Rails 3 run `rake RAILS_VERSION=3.0`)
 
 Installation
 ============
@@ -117,7 +119,6 @@ I suggest you to use latest i18n gem, include it in your rails 2 environment:
 TODO
 ====
 
-* active record 3 (rails 3) support
 * add installation description to readme
 * model and migration generators
 * caching
@@ -139,9 +140,7 @@ I know three of them:
 Used in
 =======
 
-* [noch.es](http://noch.es/)
-* [eten.es](http://www.eten.es))
-* [sem.ee](http://sem.ee/)
+[noch.es](http://noch.es/), [eten.es](http://www.eten.es), [sem.ee](http://sem.ee/)
 
 
 Copyright (c) 2009-2010 [Dmitry Polushkin], released under the MIT license
