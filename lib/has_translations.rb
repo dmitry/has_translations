@@ -89,7 +89,7 @@ class ActiveRecord::Base
 
     translation_class_name = "#{self.model_name}Translation"
     translation_class = translation_class_name.constantize
-    belongs_to = self.model_name.demodulize.singularize.underscore.to_sym
+    belongs_to = self.model_name.demodulize.underscore.to_sym
 
     write_inheritable_attribute :has_translations_options, options
     class_inheritable_reader :has_translations_options
