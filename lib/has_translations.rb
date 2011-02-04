@@ -94,10 +94,18 @@ class ActiveRecord::Base
     write_inheritable_attribute :has_translations_options, options
     class_inheritable_reader :has_translations_options
 
-    send :define_method, :find_or_build_translation do |*args|
-      locale = args.first.to_s
-      build = args.second.present?
-      find_translation(locale) || (build ? self.translations.build(:locale => locale) : self.translations.new(:locale => locale))
+    def find_or_create_translation(locale)
+      locale = locale.to_s
+      (find_translation(locale) || self.translations.new).tap do |t|
+        t.locale = locale
+      end
+    end
+
+    def find_or_build_translation(locale)
+      locale = locale.to_s
+      (find_translation(locale) || self.translations.build).tap do |t|
+        t.locale = locale
+      end
     end
 
     def translation(locale, fallback=has_translations_options[:fallback])
@@ -107,7 +115,7 @@ class ActiveRecord::Base
 
     def all_translations
       t = I18n.available_locales.map do |locale|
-        [locale, find_or_build_translation(locale)]
+        [locale, find_or_create_translation(locale)]
       end
       ActiveSupport::OrderedHash[t]
     end
@@ -128,7 +136,7 @@ class ActiveRecord::Base
     if options[:writer]
       attrs.each do |name|
         send :define_method, "#{name}=" do |value|
-          translation = find_or_build_translation(I18n.locale, true)
+          translation = find_or_build_translation(I18n.locale)
           translation.send(:"#{name}=", value)
         end
       end

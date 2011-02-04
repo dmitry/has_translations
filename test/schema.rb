@@ -22,15 +22,14 @@ ActiveRecord::Schema.define(:version => 0) do
 end
 
 class ArticleTranslation < ActiveRecord::Base
+  attr_accessible :description, :text
 end
-
 class Article < ActiveRecord::Base
   translations :description, :text, :writer => true
 end
 
 class TeamTranslation < ActiveRecord::Base
 end
-
 class Team < ActiveRecord::Base
   translations :text, :fallback => true, :nil => nil
 end

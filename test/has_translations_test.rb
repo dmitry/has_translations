@@ -23,7 +23,10 @@ class HasTranslationsTest < Test::Unit::TestCase
 
   def test_reader_text_for_a_given_locale
     article = Article.create!
-    article_translation = ArticleTranslation.create!(:article => article, :locale => 'en', :description => 'desc', :text => 'text')
+    article_translation = ArticleTranslation.new(:description => 'desc', :text => 'text')
+    article_translation.article = article
+    article_translation.locale = 'en'
+    article_translation.save!
     assert_not_equal article.text, article_translation.text
     I18n.locale = :en
     assert_equal article.text, article_translation.text
@@ -45,7 +48,10 @@ class HasTranslationsTest < Test::Unit::TestCase
   def test_translations_association_and_translations
     article = Article.create!
     assert_equal [], article.translations
-    article_translation = ArticleTranslation.create!(:article => article, :locale => 'ru', :description => 'описание', :text => 'текст')
+    article_translation = ArticleTranslation.new(:description => 'описание', :text => 'текст')
+    article_translation.article = article
+    article_translation.locale = 'ru'
+    article_translation.save!
     assert_equal [], article.translations
     assert_equal [article_translation], article.reload.translations
     assert_equal 'текст', article.text
@@ -55,6 +61,12 @@ class HasTranslationsTest < Test::Unit::TestCase
     assert_equal article_translation, article.translation(:ru)
     assert article.destroy
     assert_equal [], ArticleTranslation.all
+  end
+
+  def test_all_translation_works_fine_with_attr_accessible
+    article = Article.create!
+    t = article.all_translations
+    assert_equal 'ru', t[:ru].locale
   end
 
   def test_translation_validations
