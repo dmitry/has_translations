@@ -1,4 +1,4 @@
-HasTranslations v0.3.1
+HasTranslations v0.3.2
 ======================
 
 This simple plugin creates translations for your model.
