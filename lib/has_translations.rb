@@ -94,6 +94,18 @@ class ActiveRecord::Base
     write_inheritable_attribute :has_translations_options, options
     class_inheritable_reader :has_translations_options
 
+    # Workaround to support Rails 2
+    scope_method = if ActiveRecord::VERSION::MAJOR < 3 then :named_scope else :scope end
+
+    # associations, validations and scope definitions
+    has_many :translations, :class_name => translation_class_name, :dependent => :destroy
+    translation_class.belongs_to belongs_to
+    translation_class.validates_presence_of :locale
+    translation_class.validates_uniqueness_of :locale, :scope => :"#{belongs_to}_id"
+    send scope_method, :translated, lambda { |locale| {:conditions => ["#{translation_class.table_name}.locale = ?", locale.to_s], :joins => :translations} }
+
+    public
+
     def find_or_create_translation(locale)
       locale = locale.to_s
       (find_translation(locale) || self.translations.new).tap do |t|
@@ -141,17 +153,6 @@ class ActiveRecord::Base
         end
       end
     end
-
-    has_many :translations, :class_name => translation_class_name, :dependent => :destroy
-    
-    translation_class.belongs_to belongs_to
-    translation_class.validates_presence_of :locale
-    translation_class.validates_uniqueness_of :locale, :scope => :"#{belongs_to}_id"
-
-    # Workaround to support Rails 2
-    scope_method = if ActiveRecord::VERSION::MAJOR < 3 then :named_scope else :scope end
-
-    send scope_method, :translated, lambda { |locale| {:conditions => ["#{translation_class.table_name}.locale = ?", locale.to_s], :joins => :translations} }
 
     private
 

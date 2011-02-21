@@ -31,7 +31,7 @@ begin
     gemspec.email = "dmitry.polushkin@gmail.com"
     gemspec.homepage = "http://github.com/dmitry/has_translations"
     gemspec.authors = ["Dmitry Polushkin"]
-    gemspec.version = '0.3.2'
+    gemspec.version = '0.3.3'
   end
 rescue LoadError
   puts "Jeweler not available. Install it with: gem install jeweler"
