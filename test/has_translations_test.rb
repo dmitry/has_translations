@@ -36,15 +36,22 @@ class HasTranslationsTest < Test::Unit::TestCase
 
   def test_writer_text_for_a_given_locale
     article = Article.create!
+    assert_equal '', article.text
+    assert_equal nil, article.text_before_type_cast
     article.text = 'text'
+    assert_equal 'text', article.text_before_type_cast
     assert_equal 0, article.translations.count
     article.save!
+    assert_equal 'text', article.text_before_type_cast
     assert_equal 1, article.translations.length
     assert_equal 1, article.translations.count
     I18n.locale = :en
     assert_equal '', article.text
     article.update_attributes!(:text => 'text')
     assert_equal 2, Article.first.translations.count
+    article.text = 'text new'
+    article.save!
+    assert_equal 'text new', article.text
   end
 
   def test_translations_association_and_translations

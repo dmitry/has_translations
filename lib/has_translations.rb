@@ -39,7 +39,7 @@ class ActiveRecord::Base
   # ===
   #
   # Configuration options:
-  # 
+  #
   # * <tt>:fallback</tt> - if translation for the current locale not found.
   #   By default false. Set to true if you want to use reader fallback.
   #   Uses algorithm of fallback:
@@ -98,7 +98,7 @@ class ActiveRecord::Base
     scope_method = if ActiveRecord::VERSION::MAJOR < 3 then :named_scope else :scope end
 
     # associations, validations and scope definitions
-    has_many :translations, :class_name => translation_class_name, :dependent => :destroy
+    has_many :translations, :class_name => translation_class_name, :dependent => :destroy, :autosave => true
     translation_class.belongs_to belongs_to
     translation_class.validates_presence_of :locale
     translation_class.validates_uniqueness_of :locale, :scope => :"#{belongs_to}_id"
@@ -140,13 +140,18 @@ class ActiveRecord::Base
       attrs.each do |name|
         send :define_method, name do
           translation = self.translation(I18n.locale)
-          translation.nil? ? has_translations_options[:nil] : translation.send(name)
+          translation.try(name) || has_translations_options[:nil]
         end
       end
     end
 
     if options[:writer]
       attrs.each do |name|
+        send :define_method, "#{name}_before_type_cast" do
+          translation = self.translation(I18n.locale, false)
+          translation.try(name)
+        end
+
         send :define_method, "#{name}=" do |value|
           translation = find_or_build_translation(I18n.locale)
           translation.send(:"#{name}=", value)
