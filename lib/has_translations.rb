@@ -91,11 +91,17 @@ class ActiveRecord::Base
     translation_class = translation_class_name.constantize
     belongs_to = self.model_name.demodulize.underscore.to_sym
 
-    write_inheritable_attribute :has_translations_options, options
-    class_inheritable_reader :has_translations_options
+    if ActiveRecord::VERSION::MAJOR < 3 then
+      write_inheritable_attribute :has_translations_options, options
+      class_inheritable_reader :has_translations_options
 
-    # Workaround to support Rails 2
-    scope_method = if ActiveRecord::VERSION::MAJOR < 3 then :named_scope else :scope end
+      scope_method = :named_scope
+    else
+      class_attribute :has_translations_options
+      self.has_translations_options = options
+
+      scope_method = :scope
+    end
 
     # associations, validations and scope definitions
     has_many :translations, :class_name => translation_class_name, :dependent => :destroy, :autosave => true
