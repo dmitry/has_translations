@@ -1,14 +1,10 @@
 require 'rubygems'
 require 'test/unit'
 
-case ENV['RAILS_VERSION']
-when '3.0' then
-  gem 'activerecord', '~> 3.0.0'
-  gem 'activesupport', '~> 3.0.0'
-else
-  gem 'activerecord', '~> 2.3.0'
-  gem 'activesupport', '~> 2.3.0'
-end
+rails_version = "~> #{ENV['RAILS_VERSION'] || '3.1.0'}"
+
+gem 'activerecord', rails_version
+gem 'activesupport', rails_version
 
 require 'active_record'
 require 'logger'

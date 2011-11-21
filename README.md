@@ -1,10 +1,10 @@
-HasTranslations v0.3.3
+HasTranslations v0.3.5
 ======================
 
 This simple plugin creates translations for your model.
 Uses delegation pattern: http://en.wikipedia.org/wiki/Delegation_pattern
 
-Tested with ActiveRecord versions: 2.3.5, 2.3.9, 3.0.0 (to test with Rails 3 run `rake RAILS_VERSION=3.0`)
+Tested with ActiveRecord versions: 2.3.5, 2.3.9, 3.0.0, 3.1.0 (to test with Rails 3.1 run `rake RAILS_VERSION=3.1`)
 And tested with ruby 1.8.7 and 1.9.2
 
 Installation

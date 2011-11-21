@@ -78,20 +78,22 @@ class ActiveRecord::Base
   # <tt>all_translations</tt> method that returns all possible translations in
   # ordered hash (useful when creating forms with nested attributes).
   def self.translations(*attrs)
+    new_options = attrs.extract_options!
     options = {
       :fallback => false,
       :reader => true,
       :writer => false,
-      :nil => ''
-    }.merge(attrs.extract_options!)
+      :nil => '',
+      :autosave => new_options[:writer]
+    }.merge(new_options)
 
-    options.assert_valid_keys([:fallback, :reader, :writer, :nil])
+    options.assert_valid_keys([:fallback, :reader, :writer, :nil, :autosave])
 
     translation_class_name = "#{self.model_name}Translation"
     translation_class = translation_class_name.constantize
     belongs_to = self.model_name.demodulize.underscore.to_sym
 
-    if ActiveRecord::VERSION::MAJOR < 3 then
+    if ActiveRecord::VERSION::MAJOR < 3
       write_inheritable_attribute :has_translations_options, options
       class_inheritable_reader :has_translations_options
 
@@ -104,7 +106,7 @@ class ActiveRecord::Base
     end
 
     # associations, validations and scope definitions
-    has_many :translations, :class_name => translation_class_name, :dependent => :destroy, :autosave => true
+    has_many :translations, :class_name => translation_class_name, :dependent => :destroy, :autosave => options[:autosave]
     translation_class.belongs_to belongs_to
     translation_class.validates_presence_of :locale
     translation_class.validates_uniqueness_of :locale, :scope => :"#{belongs_to}_id"
