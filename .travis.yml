@@ -6,3 +6,8 @@ env:
   - "RAILS_VERSION=2.3.0"
   - "RAILS_VERSION=3.0.0"
   - "RAILS_VERSION=3.1.0"
+
+gemfile:
+  - gemfiles/Gemfile.rails-2.3
+  - gemfiles/Gemfile.rails-3.0
+  - gemfiles/Gemfile.rails-3.1
