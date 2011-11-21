@@ -17,8 +17,8 @@ rescue
   p "[WARNING]: This test should have the I18n.available_locales= method, which were included in versions ~> 0.3.0"
 end
 
-#ActiveRecord::Base.logger = Logger.new(STDOUT)
-ActiveRecord::Base.logger = nil
+ActiveRecord::Base.logger = Logger.new('test.log')
+#ActiveRecord::Base.logger = nil
 ActiveRecord::Base.establish_connection(:adapter => "sqlite3", :database => ":memory:")
 
 def setup_db

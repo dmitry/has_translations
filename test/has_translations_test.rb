@@ -104,6 +104,7 @@ class HasTranslationsTest < Test::Unit::TestCase
     assert_equal 'ru', team.all_translations[:ru].locale
     team_translation_new = team.translations.build(:locale => :ru)
     assert_equal team_translation_new.locale.to_s, team.all_translations[:ru].locale
+    assert_equal team.all_translations[:ru].team_id, team.id
   end
 
   def test_all_translations_should_not_have_build_translations

@@ -27,9 +27,6 @@ class ActiveRecord::Base
   # Notice: if you want to have validates_presence_of :article, you should use :inverse_of.
   # Support this by yourself. Better is always to use artile.translations.build() method.
   #
-  # For more information please read API. Feel free to write me an email to:
-  # dmitry.polushkin@gmail.com.
-  #
   # ===
   #
   # You also can pass attributes and options to the translations class method:
@@ -114,10 +111,11 @@ class ActiveRecord::Base
 
     public
 
-    def find_or_create_translation(locale)
+    define_method :find_or_create_translation do |locale|
       locale = locale.to_s
-      (find_translation(locale) || self.translations.new).tap do |t|
+      (find_translation(locale) || translation_class.new).tap do |t|
         t.locale = locale
+        t.send(:"#{belongs_to}_id=", self.id)
       end
     end
 
