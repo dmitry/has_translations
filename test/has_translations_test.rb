@@ -34,6 +34,19 @@ class HasTranslationsTest < Test::Unit::TestCase
     assert_equal article.text, article_translation.text
   end
 
+  def test_reader_for_single_column
+    article = Article.create!
+    %w{en ru wu}.each do |locale|
+      translation = article.translations.build(:description=>"description in #{locale}", :text=>"text in #{locale}")
+      translation.locale=locale
+      translation.save!
+    end
+    I18n.locale = :ru
+    assert_equal article.description(:en), "description in en"
+    assert_equal article.text(:wu), "text in wu"
+    assert_equal article.text, "text in ru"
+  end
+
   def test_writer_text_for_a_given_locale
     article = Article.create!
     assert_equal '', article.text
