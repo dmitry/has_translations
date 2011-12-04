@@ -144,8 +144,9 @@ class ActiveRecord::Base
 
     if options[:reader]
       attrs.each do |name|
-        send :define_method, name do
-          translation = self.translation(I18n.locale)
+        send :define_method, name do |*args|
+          locale = args.first || I18n.locale
+          translation = self.translation(locale)
           translation.try(name) || has_translations_options[:nil]
         end
       end
