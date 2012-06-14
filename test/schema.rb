@@ -25,11 +25,15 @@ class ArticleTranslation < ActiveRecord::Base
   attr_accessible :description, :text
 end
 class Article < ActiveRecord::Base
-  translations :description, :text, :writer => true
+  include HasTranslations::ModelAdditions
+
+  has_translations :description, :text, :writer => true
 end
 
 class TeamTranslation < ActiveRecord::Base
 end
 class Team < ActiveRecord::Base
-  translations :text, :fallback => true, :nil => nil
+  include HasTranslations::ModelAdditions
+
+  has_translations :text, :fallback => true, :nil => nil
 end

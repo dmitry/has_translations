@@ -1,20 +1,34 @@
-HasTranslations v0.3.5
-======================
+HasTranslations v1.0.0.alpha.1
+==============================
 
 This simple plugin creates translations for your model.
 Uses delegation pattern: http://en.wikipedia.org/wiki/Delegation_pattern
 
-Tested with ActiveRecord versions: 2.3.5, 2.3.9, 3.0.0, 3.1.0 (to test with Rails 3.1 run `rake RAILS_VERSION=3.1`)
-And tested with ruby 1.8.7 and 1.9.2
+Tested with ActiveRecord versions: 3.0.0, 3.1.0, 3.2.0 (to test with Rails 3.1 run `rake RAILS_VERSION=3.1`)
+And tested with ruby 1.8.7, 1.9.2, 1.9.3
+
+Compatibility
+=============
+
+This version only support Rails 3.x.x. For Rails 2.3.x support please get the 0.3.5 version of this gem.
+Plugin support is deprecated in Rails and will be removed soon so this version drop plugin support.
+To prevent method shadowing between "translations" class method and "translations" relation in models the class
+method has been renamed has_translations.
+
+    class Article < ActiveRecord::Base
+      translations :title, :text
+    end
+
+become
+
+    class Article < ActiveRecord::Base
+      has_translations :title, :text
+    end
 
 Installation
 ============
 
     gem install has_translations
-
-or as a plugin
-
-    script/plugin install git://github.com/dmitry/has_translations.git
 
 Example
 =======
@@ -45,7 +59,7 @@ Migration should have `locale` as a string with two letters and `belongs_to asso
 Add to article model `translations :value1, :value2`:
 
     class Article < ActiveRecord::Base
-      translations :title, :text
+      has_translations :title, :text
     end
 
 And that's it. Now you can add your translations using:
@@ -110,13 +124,6 @@ named_scope `translated(locale)` - with that named_scope you can find only
 those models that is translated only to specific locale. For example if you will
 have 2 models, one is translated to english and the second one isn't, then it
 `Article.translated(:en)` will find only first one.
-
-PS
-==
-
-I suggest you to use latest i18n gem, include it in your rails 2 environment:
-
-    config.gem 'i18n', :version => '0.4.1' # change version to the latest
 
 TODO
 ====
