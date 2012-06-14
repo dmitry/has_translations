@@ -74,6 +74,7 @@ Options:
 * :fallback => true [default: false] - fallback 1) default locale; 2) first from translations;
 * :reader => false [default: true] - add reader to the model object
 * :writer => true [default: false] - add writer to the model object
+* :autosave => true [default: false] - use [autosave option](http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-has_many) for the ActiveRecord translations relation
 * :nil => nil [default: ''] - if no model found by default returns empty string, you can set it for example to `nil` (no `lambda` supported)
 
 It's better to use translations with `accepts_nested_attributes_for`:
