@@ -35,26 +35,11 @@ Example
 
 For example you have Article model and you want to have title and text to be translated.
 
-Create model named ArticleTranslation (Rule: [CamelCaseModelName]Translation)
+Run in comand line:
 
-Migration should have `locale` as a string with two letters and `belongs_to associative id`, like:
+    rails g translation_for article title:string text:text
 
-    class CreateArticleTranslations < ActiveRecord::Migration
-      def self.up
-        create_table :article_translations do |t|
-          t.integer :article_id, :null => false
-          t.string :locale, :null => false, :limit => 2
-          t.string :title, :null => false
-          t.text :text, :null => false
-        end
-
-        add_index :article_translations, [:article_id, :locale], :unique => true
-      end
-
-      def self.down
-        drop_table :article_translations
-      end
-    end
+It will produce ArticleTranslation model and migration.
 
 Add to article model `translations :value1, :value2`:
 
@@ -139,8 +124,8 @@ Alternatives
 
 I know three of them:
 
-* [puret](http://github.com/jo/puret) - special for Rails 3 and almost the same as this project.
 * [globalite3](https://github.com/svenfuchs/globalize3) - Globalize3 is the successor of Globalize for Rails.
+* [puret](http://github.com/jo/puret) - special for Rails 3 and almost the same as this project.
 * [model_translations](http://github.com/janne/model_translations) - almost the same as this project, but more with more code in lib.
 * [translatable_columns](http://github.com/iain/translatable_columns) - different approach: every column have own postfix "_#{locale}" in the same table (sometimes it could be fine).
 
@@ -151,4 +136,4 @@ Used in
 [noch.es](http://noch.es/), [eten.es](http://www.eten.es), [sem.ee](http://sem.ee/)
 
 
-Copyright (c) 2009-2010 [Dmitry Polushkin], released under the MIT license
+Copyright (c) 2009-2012 [Dmitry Polushkin], released under the MIT license
