@@ -1,0 +1,19 @@
+class Create<%= table_name.camelcase %> < ActiveRecord::Migration
+
+  def <%= old_active_record? ? "self.up" : "change" %>
+    create_table :<%= table_name %> do |t|
+      t.integer :<%= foreign_key_name %>, :null => false
+      t.string :locale, :null => false, :limit => 2
+      <%- attributes.each do |attribute| -%>
+      t.<%= attribute.type %> :<%= attribute.name %>, :null => false
+      <%- end -%>
+    end
+
+    add_index :<%= table_name %>, [:<%= foreign_key_name %>, :locale], :unique => true
+  end
+<% if old_active_record? %>
+  def self.down
+    drop_table :<%= table_name %>
+  end
+<% end %>
+end
