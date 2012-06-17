@@ -129,7 +129,6 @@ TODO
 ====
 
 * add installation description to readme
-* model and migration generators
 * caching
 * write more examples: fallback feature
 * write blog post about comparison and benefits of this plugin between another translation model plugins
@@ -141,7 +140,7 @@ Alternatives
 I know three of them:
 
 * [puret](http://github.com/jo/puret) - special for Rails 3 and almost the same as this project.
-* [globalite2](http://github.com/joshmh/globalize2) - a lot of magic.
+* [globalite3](https://github.com/svenfuchs/globalize3) - Globalize3 is the successor of Globalize for Rails.
 * [model_translations](http://github.com/janne/model_translations) - almost the same as this project, but more with more code in lib.
 * [translatable_columns](http://github.com/iain/translatable_columns) - different approach: every column have own postfix "_#{locale}" in the same table (sometimes it could be fine).
 
