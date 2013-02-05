@@ -14,6 +14,7 @@ module HasTranslations
           :reader => true,
           :writer => false,
           :nil => '',
+          #:inverse_of => self.model_name.singular.to_sym,
           :autosave => new_options[:writer],
           :translation_class => nil
         }.merge(new_options)
@@ -21,7 +22,7 @@ module HasTranslations
         translation_class_name =  options[:translation_class].try(:name) || "#{self.model_name}Translation"
         options[:translation_class] ||= translation_class_name.constantize
 
-        options.assert_valid_keys([:fallback, :reader, :writer, :nil, :autosave, :translation_class])
+        options.assert_valid_keys([:fallback, :reader, :writer, :nil, :inverse_of, :autosave, :translation_class])
 
         belongs_to = self.model_name.demodulize.underscore.to_sym
 
@@ -29,7 +30,7 @@ module HasTranslations
         self.has_translations_options = options
 
         # associations, validations and scope definitions
-        has_many :translations, :class_name => translation_class_name, :dependent => :destroy, :autosave => options[:autosave]
+        has_many :translations, :class_name => translation_class_name, :dependent => :destroy, :autosave => options[:autosave], :inverse_of => options[:inverse_of]
         options[:translation_class].belongs_to belongs_to
         options[:translation_class].validates_presence_of :locale
         options[:translation_class].validates_uniqueness_of :locale, :scope => :"#{belongs_to}_id"
