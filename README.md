@@ -130,10 +130,4 @@ I know three of them:
 * [translatable_columns](http://github.com/iain/translatable_columns) - different approach: every column have own postfix "_#{locale}" in the same table (sometimes it could be fine).
 
 
-Used in
-=======
-
-[noch.es](http://noch.es/), [eten.es](http://www.eten.es), [sem.ee](http://sem.ee/)
-
-
-Copyright (c) 2009-2012 [Dmitry Polushkin], released under the MIT license
+Copyright (c) 2009-2013 [Dmitry Polushkin], released under the MIT license
