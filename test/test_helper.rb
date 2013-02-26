@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'test/unit'
 
-rails_version = "~> #{ENV['RAILS_VERSION'] || '3.2.0'}"
+rails_version = "~> #{ENV['RAILS_VERSION'] || '3.2'}"
 
 gem 'activerecord', rails_version
 gem 'activesupport', rails_version

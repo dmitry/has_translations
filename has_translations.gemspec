@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.license          = 'MIT'
-  s.add_dependency 'activesupport', '>= 3.0'
-  s.add_dependency 'activerecord', '>= 3.0'
-  s.add_development_dependency "ruby-debug"
+  s.add_dependency 'activesupport', ">= #{ENV['RAILS_VERSION'] || '3.2'}"
+  s.add_dependency 'activerecord', ">= #{ENV['RAILS_VERSION'] || '3.2'}"
+  #s.add_development_dependency "ruby-debug"
 end
