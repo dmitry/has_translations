@@ -24,7 +24,7 @@ module HasTranslations
 
         options.assert_valid_keys([:fallback, :reader, :writer, :nil, :inverse_of, :autosave, :translation_class])
 
-        belongs_to = self.model_name.demodulize.underscore.to_sym
+        belongs_to = self.model_name.to_s.demodulize.underscore.to_sym
 
         class_attribute :has_translations_options
         self.has_translations_options = options
