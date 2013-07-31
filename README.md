@@ -1,16 +1,18 @@
 HasTranslations v1.0.0.alpha.1
 ==============================
 
+[![Build Status](https://secure.travis-ci.org/dmitry/has_translations.png?branch=master)](http://travis-ci.org/dmitry/has_translations) [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/dmitry/has_translations/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
 This simple plugin creates translations for your model.
 Uses delegation pattern: http://en.wikipedia.org/wiki/Delegation_pattern
 
-Tested with ActiveRecord versions: 3.0.0, 3.1.0, 3.2.0 (to test with Rails 3.1 run `rake RAILS_VERSION=3.1`)
-And tested with ruby 1.8.7, 1.9.2, 1.9.3
+Tested with ActiveRecord versions: 3.1.x, 3.2.x, 4.0.x
+And tested with ruby 1.8.7 (ree), 1.9.3, 2.0.0
 
 Compatibility
 =============
 
-This version only support Rails 3.x.x. For Rails 2.3.x support please get the 0.3.5 version of this gem.
+This version only support Rails 4.0.x and 3.x.x. For Rails 2.3.x support please get the 0.3.5 version of this gem.
 Plugin support is deprecated in Rails and will be removed soon so this version drop plugin support.
 To prevent method shadowing between "translations" class method and "translations" relation in models the class
 method has been renamed has_translations.

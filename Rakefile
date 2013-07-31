@@ -1,17 +1,18 @@
-require 'rake'
+require 'bundler/gem_tasks'
 require 'rake/testtask'
-require 'rdoc/task'
+require 'appraisal'
 
-require 'bundler'
-Bundler::GemHelper.install_tasks
+Rake::TestTask.new   do |t|
+  t.libs = %w(lib test)
+  t.test_files = Dir.glob('test/**/*_test.rb').sort
+  t.verbose = true
+end
 
-desc 'Default: run unit tests.'
 task :default => :test
 
-desc 'Test the has_translations plugin.'
-Rake::TestTask.new(:test) do |t|
-  t.libs << 'lib'
-  t.libs << 'test'
-  t.pattern = 'test/**/*_test.rb'
-  t.verbose = true
+desc 'Setup Appraisal.'
+task 'appraisal:setup' do
+  Rake::Task['appraisal:cleanup'].invoke
+  Rake::Task['appraisal:gemfiles'].invoke
+  Rake::Task['appraisal:install'].invoke
 end

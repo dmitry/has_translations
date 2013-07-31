@@ -68,7 +68,7 @@ module HasTranslations
       locale = locale.to_s
       (find_translation(locale) || self.has_translations_options[:translation_class].new).tap do |t|
         t.locale = locale
-        t.send(:"#{self.class.model_name.demodulize.underscore.to_sym}_id=", self.id)
+        t.send(:"#{self.class.model_name.to_s.demodulize.underscore.to_sym}_id=", self.id)
       end
     end
 

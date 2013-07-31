@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(:version => 0) do
 end
 
 class ArticleTranslation < ActiveRecord::Base
-  attr_accessible :description, :text
+  #attr_accessible :description, :text
 end
 class Article < ActiveRecord::Base
   include HasTranslations::ModelAdditions
