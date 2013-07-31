@@ -1,4 +1,4 @@
-HasTranslations v1.0.0.alpha.1
+HasTranslations v1.0.0
 ==============================
 
 [![Build Status](https://secure.travis-ci.org/dmitry/has_translations.png?branch=master)](http://travis-ci.org/dmitry/has_translations) [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/dmitry/has_translations/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
@@ -37,7 +37,7 @@ Example
 
 For example you have Article model and you want to have title and text to be translated.
 
-Run in comand line:
+Run in command line:
 
     rails g translation_for article title:string text:text
 
@@ -72,11 +72,11 @@ You can use text filtering plugins, like acts_as_sanitiled and validations, and 
 
 Options:
 
-* :fallback => true [default: false] - fallback 1) default locale; 2) first from translations;
-* :reader => false [default: true] - add reader to the model object
-* :writer => true [default: false] - add writer to the model object
-* :autosave => true [default: false] - use [autosave option](http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-has_many) for the ActiveRecord translations relation
-* :nil => nil [default: ''] - if no model found by default returns empty string, you can set it for example to `nil` (no `lambda` supported)
+* `:fallback => true` [default: false] - fallback 1) default locale; 2) first from translations;
+* `:reader => false` [default: true] - add reader to the model object
+* `:writer => true` [default: false] - add writer to the model object
+* `:autosave => true` [default: false] - use [autosave option](http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-has_many) for the ActiveRecord translations relation
+* `:nil => nil` [default: ''] - if no model found by default returns empty string, you can set it for example to `nil` (no `lambda` supported)
 
 It's better to use translations with `accepts_nested_attributes_for`:
 
@@ -115,7 +115,6 @@ have 2 models, one is translated to english and the second one isn't, then it
 TODO
 ====
 
-* add installation description to readme
 * caching
 * write more examples: fallback feature
 * write blog post about comparison and benefits of this plugin between another translation model plugins
@@ -126,7 +125,7 @@ Alternatives
 
 I know three of them:
 
-* [globalite3](https://github.com/svenfuchs/globalize3) - Globalize3 is the successor of Globalize for Rails.
+* [globalize3](https://github.com/svenfuchs/globalize3) - Globalize3 is the successor of Globalize for Rails.
 * [puret](http://github.com/jo/puret) - special for Rails 3 and almost the same as this project.
 * [model_translations](http://github.com/janne/model_translations) - almost the same as this project, but more with more code in lib.
 * [translatable_columns](http://github.com/iain/translatable_columns) - different approach: every column have own postfix "_#{locale}" in the same table (sometimes it could be fine).
