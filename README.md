@@ -1,7 +1,7 @@
-HasTranslations v1.0.0
+HasTranslations
 ==============================
 
-[![Build Status](https://secure.travis-ci.org/dmitry/has_translations.png?branch=master)](http://travis-ci.org/dmitry/has_translations) [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/dmitry/has_translations/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+[![Build Status](https://secure.travis-ci.org/dmitry/has_translations.png?branch=master)](http://travis-ci.org/dmitry/has_translations) [![Gem Version](https://badge.fury.io/rb/has_translations.png)](http://badge.fury.io/rb/has_translations) [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/dmitry/has_translations/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
 This simple plugin creates translations for your model.
 Uses delegation pattern: http://en.wikipedia.org/wiki/Delegation_pattern
