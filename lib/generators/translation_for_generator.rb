@@ -19,7 +19,7 @@ class TranslationForGenerator < ActiveRecord::Generators::Base
     template 'model.rb.erb', File.join('app/models', class_path, "#{file_name}.rb")
   end
 
-  def create_migration
+  def create_translations_migration
     migration_template 'migration.rb.erb', "db/migrate/create_#{table_name}"
   end
 
