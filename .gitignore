@@ -5,4 +5,4 @@ pkg/*
 test.log
 test/has_translations_plugin.sqlite3.db
 test/debug.log
-
+Gemfile.lock

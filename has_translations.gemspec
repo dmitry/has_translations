@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
-$:.push File.expand_path("../lib", __FILE__)
-require "has_translations/version"
+$:.push File.expand_path('../lib', __FILE__)
+require 'has_translations/version'
 
 Gem::Specification.new do |s|
   s.name        = 'has_translations'
@@ -20,9 +20,10 @@ Gem::Specification.new do |s|
 
   s.license          = 'MIT'
 
-  s.add_dependency 'activesupport', '>= 3.1.0'
-  s.add_dependency 'activerecord', '>= 3.1.0'
+  s.add_dependency 'activesupport', '>= 3.2.0'
+  s.add_dependency 'activerecord', '>= 3.2.0'
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'appraisal'
   s.add_development_dependency 'rake'
+  s.add_development_dependency 'test-unit'
 end
