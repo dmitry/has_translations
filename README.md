@@ -1,7 +1,7 @@
 HasTranslations
 ==============================
 
-[![Build Status](https://secure.travis-ci.org/dmitry/has_translations.png?branch=master)](http://travis-ci.org/dmitry/has_translations) 
+[![Build Status](https://secure.travis-ci.org/dmitry/has_translations.png?branch=master)](http://travis-ci.org/dmitry/has_translations)
 [![Gem Version](https://badge.fury.io/rb/has_translations.png)](http://badge.fury.io/rb/has_translations)
 
 This simple plugin creates translations for your model.
@@ -78,6 +78,7 @@ Options:
 * `:writer => true` [default: false] - add writer to the model object
 * `:autosave => true` [default: false] - use [autosave option](http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html#method-i-has_many) for the ActiveRecord translations relation
 * `:nil => nil` [default: ''] - if no model found by default returns empty string, you can set it for example to `nil` (no `lambda` supported)
+* `:foreign_key => nil` [default: nil] - add the foreign_key for has_many and belogns_to associations
 
 It's better to use translations with `accepts_nested_attributes_for`:
 
