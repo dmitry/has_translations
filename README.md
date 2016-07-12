@@ -7,8 +7,8 @@ HasTranslations
 This simple plugin creates translations for your model.
 Uses delegation pattern: http://en.wikipedia.org/wiki/Delegation_pattern
 
-Tested with ActiveRecord versions: 3.2.x, 4.0.x, 4.1.x, 4.2.x
-And tested with ruby 1.9.3, 2.0.0, 2.1.x, 2.2.x
+Tested with ActiveRecord versions: 3.2.x, 4.0.x, 4.1.x, 4.2.x, 5.0.x
+And tested with ruby 1.9.3, 2.0.0, 2.1.x, 2.2.x, 2.3.x
 
 Compatibility
 =============
