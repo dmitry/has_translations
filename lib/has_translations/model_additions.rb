@@ -29,7 +29,8 @@ module HasTranslations
             :nil,
             :inverse_of,
             :autosave,
-            :translation_class
+            :translation_class,
+            :foreign_key
           ]
         )
 
@@ -39,18 +40,19 @@ module HasTranslations
         self.has_translations_options = options
 
         # associations, validations and scope definitions
-        options[:translation_class].belongs_to(belongs_to)
+        options[:translation_class].belongs_to(belongs_to, foreign_key: options[:foreign_key])
         has_many(
           :translations,
           class_name: translation_class_name,
           dependent: :destroy,
           autosave: options[:autosave],
-          inverse_of: options[:inverse_of]
+          inverse_of: options[:inverse_of],
+          foreign_key: options[:foreign_key]
         )
         options[:translation_class].validates(
           :locale,
           presence: true,
-          uniqueness: {scope: :"#{belongs_to}_id"}
+          uniqueness: {scope: (options[:foreign_key] || "#{belongs_to}_id").to_sym}
         )
 
         # Optionals delegated readers

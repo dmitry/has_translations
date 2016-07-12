@@ -5,8 +5,8 @@ require 'test_helper'
 class HasTranslationsTest < Test::Unit::TestCase
   def setup
     setup_db
-    
-    [Article, ArticleTranslation, Team, TeamTranslation].each do |k|
+
+    [Article, ArticleTranslation, Team, TeamTranslation, Organization, Organization, OrganizationTranslation].each do |k|
       k.delete_all
     end
     I18n.locale = :ru
@@ -17,7 +17,7 @@ class HasTranslationsTest < Test::Unit::TestCase
   end
 
   def test_schema_has_loaded_correctly
-    [Article, ArticleTranslation, Team, TeamTranslation].each do |k|
+    [Article, ArticleTranslation, Team, TeamTranslation, Organization, OrganizationTranslation].each do |k|
       assert_equal [], k.all
     end
     assert_equal :ru, I18n.locale
@@ -143,5 +143,15 @@ class HasTranslationsTest < Test::Unit::TestCase
     assert_equal 1, Team.translated(:en).count
     team.translations.create!(:locale => 'ru', :text => 'текст')
     assert_equal 1, Team.translated(:ru).count
+  end
+
+  def test_foreign_key_for_has_many_associations
+    organization = Organization.create!
+    organization.translations.create!(:locale => 'en', :text => 'text')
+    assert organization.has_translation?(:en)
+    organization.translations.create!(:locale => 'ru', :text => 'текст')
+    assert_equal 2, organization.reload.translations.count
+    assert_equal 1, Organization.translated(:en).count
+    assert_equal 1, Organization.translated(:ru).count
   end
 end
