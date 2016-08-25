@@ -1,11 +1,10 @@
 rvm:
-  - 1.9.3
   - 2.0.0
-  - 2.1.9
+  - 2.1.10
   - 2.2.5
   - 2.3.1
 before_install:
-  - "gem install bundler -v=1.10.6"
+  - "gem install bundler"
 before_script:
   - "bundle install"
 script: "bundle exec rake test"
@@ -16,3 +15,9 @@ gemfile:
   - gemfiles/4.2.gemfile
   - gemfiles/5.0.gemfile
 cache: bundler
+matrix:
+  exclude:
+  - rvm: 2.0.0
+    gemfile: gemfiles/5.0.gemfile
+  - rvm: 2.1.9
+    gemfile: gemfiles/5.0.gemfile
