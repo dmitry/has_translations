@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    has_translations (1.1.1)
+    has_translations (1.1.2)
       activerecord (>= 3.2.0)
       activesupport (>= 3.2.0)
 
@@ -48,4 +48,4 @@ DEPENDENCIES
   test-unit
 
 BUNDLED WITH
-   1.12.4
+   1.12.5
