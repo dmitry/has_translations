@@ -99,8 +99,7 @@ module HasTranslations
     end
 
     def translation(locale, fallback=has_translations_options[:fallback])
-      locale = locale.to_s
-      find_translation(locale) || (fallback && !translations.blank? ? translations.detect { |t| t.locale == I18n.default_locale.to_s } || translations.first : nil)
+      find_translation(locale) || (fallback && !translations.empty? ? find_translation(I18n.default_locale) || translations.first : nil)
     end
 
     def all_translations
