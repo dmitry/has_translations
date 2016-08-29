@@ -4,7 +4,7 @@ module HasTranslations
 
     module ClassMethods
       def translated(locale)
-        where(["#{self.has_translations_options[:translation_class].table_name}.locale = ?", locale.to_s]).joins(:translations)
+        where("#{self.has_translations_options[:translation_class].table_name}.locale = ?", locale).joins(:translations)
       end
 
       def has_translations(*attrs)
