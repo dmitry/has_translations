@@ -18,20 +18,26 @@ Plugin support is deprecated in Rails and will be removed soon so this version d
 To prevent method shadowing between "translations" class method and "translations" relation in models the class
 method has been renamed has_translations.
 
-    class Article < ActiveRecord::Base
-      translations :title, :text
-    end
+```ruby
+class Article < ActiveRecord::Base
+  translations :title, :text
+end
+```
 
 become
 
-    class Article < ActiveRecord::Base
-      has_translations :title, :text
-    end
+```ruby
+class Article < ActiveRecord::Base
+  has_translations :title, :text
+end
+```
 
 Installation
 ============
 
-    gem install has_translations
+```bash
+gem install has_translations
+```
 
 Example
 =======
@@ -40,36 +46,44 @@ For example you have Article model and you want to have title and text to be tra
 
 Run in command line:
 
-    rails g translation_for article title:string text:text
+```bash
+rails g translation_for article title:string text:text
+```
 
 It will produce ArticleTranslation model and migration.
 
 Add to article model `translations :value1, :value2`:
 
-    class Article < ActiveRecord::Base
-      has_translations :title, :text
-    end
+```ruby
+class Article < ActiveRecord::Base
+  has_translations :title, :text
+end
+```
 
 And that's it. Now you can add your translations using:
 
-    article = Article.create
+```ruby
+article = Article.create
 
-    article.translations.create(:locale => 'en', :title => 'title', :text => 'text') # or ArticleTranslation.create(:article => article, :locale => 'en', :title => 'title', :text => 'text')
-    article.translations.create(:locale => 'ru', :title => 'заголовок', :text => 'текст')
-    article.reload # reload cached translations association array
-    I18n.locale = :en
-    article.text # text
-    I18n.locale = :ru
-    article.title # заголовок
+article.translations.create(:locale => 'en', :title => 'title', :text => 'text') # or ArticleTranslation.create(:article => article, :locale => 'en', :title => 'title', :text => 'text')
+article.translations.create(:locale => 'ru', :title => 'заголовок', :text => 'текст')
+article.reload # reload cached translations association array
+I18n.locale = :en
+article.text # text
+I18n.locale = :ru
+article.title # заголовок
+```
 
 You can use text filtering plugins, like acts_as_sanitiled and validations, and anything else that is available to the ActiveRecord:
 
-    class ArticleTranslation < ActiveRecord::Base
-      acts_as_sanitiled :title, :text
+```ruby
+class ArticleTranslation < ActiveRecord::Base
+  acts_as_sanitiled :title, :text
 
-      validates_presence_of :title, :text
-      validates_length_of :title, :maximum => 100
-    end
+  validates_presence_of :title, :text
+  validates_length_of :title, :maximum => 100
+end
+```
 
 Options:
 
@@ -82,32 +96,38 @@ Options:
 
 It's better to use translations with `accepts_nested_attributes_for`:
 
-    accepts_nested_attributes_for :translations
+```ruby
+accepts_nested_attributes_for :translations
+```
 
 To create a form for this you can use `all_translations` method. It's have all
 the locales that you have added using the `I18n.available_locales=` method.
 If translation for one of the locale isn't exists, it will build it with :locale.
 So an example which I used in the production (using `formtastic` gem):
 
-    <% semantic_form_for [:admin, @article] do |f| %>
-      <%= f.error_messages %>
+```ruby
+<% semantic_form_for [:admin, @article] do |f| %>
+  <%= f.error_messages %>
 
-      <% f.inputs :name => "Basic" do %>
-        <% object.all_translations.values.each do |translation| %>
-          <% f.semantic_fields_for :translations, translation do |ft| %>
-            <%= ft.input :title, :label => "Title #{ft.object.locale.to_s.upcase}" %>
-            <%= ft.input :text, :label => "Text #{ft.object.locale.to_s.upcase}" %>
-            <%= ft.input :locale, :as => :hidden %>
-          <% end %>
-        <% end %>
+  <% f.inputs :name => "Basic" do %>
+    <% object.all_translations.values.each do |translation| %>
+      <% f.semantic_fields_for :translations, translation do |ft| %>
+        <%= ft.input :title, :label => "Title #{ft.object.locale.to_s.upcase}" %>
+        <%= ft.input :text, :label => "Text #{ft.object.locale.to_s.upcase}" %>
+        <%= ft.input :locale, :as => :hidden %>
       <% end %>
     <% end %>
+  <% end %>
+<% end %>
+```
 
 Sometimes you have validations in the translation model, and if you want to skip
 the translations that you don't want to add to the database, you can use
 `:reject_if` option, which is available for the `accepts_nested_attributes_for`:
 
-    accepts_nested_attributes_for :translations, :reject_if => lambda { |attrs| attrs['title'].blank? && attrs['text'].blank? }
+```ruby
+accepts_nested_attributes_for :translations, :reject_if => lambda { |attrs| attrs['title'].blank? && attrs['text'].blank? }
+```
 
 named_scope `translated(locale)` - with that named_scope you can find only
 those models that is translated only to specific locale. For example if you will
