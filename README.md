@@ -1,6 +1,8 @@
 HasTranslations
 ==============================
 
+**UNMAINTAINED**: Please use [mobility gem](https://github.com/shioyama/mobility), it has a lot of options ([including table](https://github.com/shioyama/mobility/wiki/Table-Backend)) and maintained.
+
 [![Build Status](https://secure.travis-ci.org/dmitry/has_translations.png?branch=master)](http://travis-ci.org/dmitry/has_translations)
 [![Gem Version](https://badge.fury.io/rb/has_translations.png)](http://badge.fury.io/rb/has_translations)
 
